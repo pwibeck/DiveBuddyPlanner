@@ -1,0 +1,1 @@
+Is decompression planning application for windows phone 7. The algorithm used is based on Buhlmann ZHL16A, ZHL16B and ZH 17B with m-value gradient conservatism. Both air, nitrox and trimix diving is supported.
