@@ -64,22 +64,22 @@ namespace DiveLibraryTests
         //
         #endregion
 
-        /// <summary>
-        ///A test for Calc
-        ///</summary>
-        [TestMethod()]
-        public void CalcTest()
-        {
-            DiveProfile target = new DiveProfile(); // TODO: Initialize to an appropriate value
-            Collection<WayPoint> waypoints = null; // TODO: Initialize to an appropriate value
-            ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
-            Preference pref = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> expected = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> actual;
-            actual = target.Calc(waypoints, algorithm, pref);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+        ///// <summary>
+        /////A test for Calc
+        /////</summary>
+        //[TestMethod()]
+        //public void CalcTest()
+        //{
+        //    DiveProfile target = new DiveProfile(); // TODO: Initialize to an appropriate value
+        //    Collection<WayPoint> waypoints = null; // TODO: Initialize to an appropriate value
+        //    ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
+        //    Preference pref = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> expected = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> actual;
+        //    actual = target.Calc(waypoints, algorithm, pref);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("Verify the correctness of this test method.");
+        //}
 
         /// <summary>
         ///A test for CalcAscDescTime
@@ -354,45 +354,45 @@ namespace DiveLibraryTests
             Assert.AreEqual(expected, actual);
         }
 
-        /// <summary>
-        ///A test for ContinueAscend
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("DiveLibrary.dll")]
-        public void ContinueAscendTest()
-        {
-            DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
-            ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
-            double finalDepth = 0F; // TODO: Initialize to an appropriate value
-            double decoDepth = 0F; // TODO: Initialize to an appropriate value
-            double expected = 0F; // TODO: Initialize to an appropriate value
-            double actual;
-            actual = target.ContinueAscend(algorithm, finalDepth, decoDepth);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+        ///// <summary>
+        /////A test for ContinueAscend
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem("DiveLibrary.dll")]
+        //public void ContinueAscendTest()
+        //{
+        //    DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
+        //    ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
+        //    double finalDepth = 0F; // TODO: Initialize to an appropriate value
+        //    double decoDepth = 0F; // TODO: Initialize to an appropriate value
+        //    double expected = 0F; // TODO: Initialize to an appropriate value
+        //    double actual;
+        //    actual = target.ContinueAscend(algorithm, finalDepth, decoDepth);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("Verify the correctness of this test method.");
+        //}
 
-        /// <summary>
-        ///A test for DoDeco
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("DiveLibrary.dll")]
-        public void DoDecoTest()
-        {
-            DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
-            ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
-            double currentDepth = 0F; // TODO: Initialize to an appropriate value
-            double finalDepth = 0F; // TODO: Initialize to an appropriate value
-            int runTime = 0; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> diveTable = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> diveTableExpected = null; // TODO: Initialize to an appropriate value
-            TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
-            TimeSpan actual;
-            actual = target.DoDeco(algorithm, currentDepth, finalDepth, runTime, ref diveTable);
-            Assert.AreEqual(diveTableExpected, diveTable);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+        ///// <summary>
+        /////A test for DoDeco
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem("DiveLibrary.dll")]
+        //public void DoDecoTest()
+        //{
+        //    DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
+        //    ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
+        //    double currentDepth = 0F; // TODO: Initialize to an appropriate value
+        //    double finalDepth = 0F; // TODO: Initialize to an appropriate value
+        //    int runTime = 0; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> diveTable = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> diveTableExpected = null; // TODO: Initialize to an appropriate value
+        //    TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
+        //    TimeSpan actual;
+        //    actual = target.DoDeco(algorithm, currentDepth, finalDepth, runTime, ref diveTable);
+        //    Assert.AreEqual(diveTableExpected, diveTable);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("Verify the correctness of this test method.");
+        //}
 
         /// <summary>
         ///A test for GetDecoDepth
@@ -462,92 +462,92 @@ namespace DiveLibraryTests
             Assert.AreEqual(expected, actual);
         }
 
-        /// <summary>
-        ///A test for GetDecoStopTime
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("DiveLibrary.dll")]
-        public void GetDecoStopTimeTest()
-        {
-            ZH_L16 alg = null; // TODO: Initialize to an appropriate value
-            double depth = 0F; // TODO: Initialize to an appropriate value
-            Preference pref = null; // TODO: Initialize to an appropriate value
-            double gradient = 0F; // TODO: Initialize to an appropriate value
-            int expected = 0; // TODO: Initialize to an appropriate value
-            int actual;
-            actual = DiveProfile_Accessor.GetDecoStopTime(alg, depth, pref, gradient);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+        ///// <summary>
+        /////A test for GetDecoStopTime
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem("DiveLibrary.dll")]
+        //public void GetDecoStopTimeTest()
+        //{
+        //    ZH_L16 alg = null; // TODO: Initialize to an appropriate value
+        //    double depth = 0F; // TODO: Initialize to an appropriate value
+        //    Preference pref = null; // TODO: Initialize to an appropriate value
+        //    double gradient = 0F; // TODO: Initialize to an appropriate value
+        //    int expected = 0; // TODO: Initialize to an appropriate value
+        //    int actual;
+        //    actual = DiveProfile_Accessor.GetDecoStopTime(alg, depth, pref, gradient);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("Verify the correctness of this test method.");
+        //}
 
-        /// <summary>
-        ///A test for GoingDown
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("DiveLibrary.dll")]
-        public void GoingDownTest()
-        {
-            DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
-            ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> divetable = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> divetableExpected = null; // TODO: Initialize to an appropriate value
-            int runTime = 0; // TODO: Initialize to an appropriate value
-            double currentDepth = 0F; // TODO: Initialize to an appropriate value
-            WayPoint waypoint = null; // TODO: Initialize to an appropriate value
-            TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
-            TimeSpan actual;
-            actual = target.GoingDown(algorithm, ref divetable, runTime, currentDepth, waypoint);
-            Assert.AreEqual(divetableExpected, divetable);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+        ///// <summary>
+        /////A test for GoingDown
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem("DiveLibrary.dll")]
+        //public void GoingDownTest()
+        //{
+        //    DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
+        //    ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> divetable = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> divetableExpected = null; // TODO: Initialize to an appropriate value
+        //    int runTime = 0; // TODO: Initialize to an appropriate value
+        //    double currentDepth = 0F; // TODO: Initialize to an appropriate value
+        //    WayPoint waypoint = null; // TODO: Initialize to an appropriate value
+        //    TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
+        //    TimeSpan actual;
+        //    actual = target.GoingDown(algorithm, ref divetable, runTime, currentDepth, waypoint);
+        //    Assert.AreEqual(divetableExpected, divetable);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("Verify the correctness of this test method.");
+        //}
 
-        /// <summary>
-        ///A test for GoingUp
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("DiveLibrary.dll")]
-        public void GoingUpTest()
-        {
-            DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
-            ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> divetable = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> divetableExpected = null; // TODO: Initialize to an appropriate value
-            int runTime = 0; // TODO: Initialize to an appropriate value
-            double depth = 0F; // TODO: Initialize to an appropriate value
-            WayPoint waypoint = null; // TODO: Initialize to an appropriate value
-            TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
-            TimeSpan actual;
-            actual = target.GoingUp(algorithm, ref divetable, runTime, depth, waypoint);
-            Assert.AreEqual(divetableExpected, divetable);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+        ///// <summary>
+        /////A test for GoingUp
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem("DiveLibrary.dll")]
+        //public void GoingUpTest()
+        //{
+        //    DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
+        //    ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> divetable = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> divetableExpected = null; // TODO: Initialize to an appropriate value
+        //    int runTime = 0; // TODO: Initialize to an appropriate value
+        //    double depth = 0F; // TODO: Initialize to an appropriate value
+        //    WayPoint waypoint = null; // TODO: Initialize to an appropriate value
+        //    TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
+        //    TimeSpan actual;
+        //    actual = target.GoingUp(algorithm, ref divetable, runTime, depth, waypoint);
+        //    Assert.AreEqual(divetableExpected, divetable);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("Verify the correctness of this test method.");
+        //}
 
-        /// <summary>
-        ///A test for GotoDecoDepth
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("DiveLibrary.dll")]
-        public void GotoDecoDepthTest()
-        {
-            DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
-            ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
-            double currentDepth = 0F; // TODO: Initialize to an appropriate value
-            double finalDepth = 0F; // TODO: Initialize to an appropriate value
-            int runTime = 0; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> diveTable = null; // TODO: Initialize to an appropriate value
-            Collection<DiveSegment> diveTableExpected = null; // TODO: Initialize to an appropriate value
-            double stopDepth = 0F; // TODO: Initialize to an appropriate value
-            double stopDepthExpected = 0F; // TODO: Initialize to an appropriate value
-            TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
-            TimeSpan actual;
-            actual = target.GotoDecoDepth(algorithm, currentDepth, finalDepth, runTime, ref diveTable, out stopDepth);
-            Assert.AreEqual(diveTableExpected, diveTable);
-            Assert.AreEqual(stopDepthExpected, stopDepth);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+        ///// <summary>
+        /////A test for GotoDecoDepth
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem("DiveLibrary.dll")]
+        //public void GotoDecoDepthTest()
+        //{
+        //    DiveProfile_Accessor target = new DiveProfile_Accessor(); // TODO: Initialize to an appropriate value
+        //    ZH_L16 algorithm = null; // TODO: Initialize to an appropriate value
+        //    double currentDepth = 0F; // TODO: Initialize to an appropriate value
+        //    double finalDepth = 0F; // TODO: Initialize to an appropriate value
+        //    int runTime = 0; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> diveTable = null; // TODO: Initialize to an appropriate value
+        //    Collection<DiveSegment> diveTableExpected = null; // TODO: Initialize to an appropriate value
+        //    double stopDepth = 0F; // TODO: Initialize to an appropriate value
+        //    double stopDepthExpected = 0F; // TODO: Initialize to an appropriate value
+        //    TimeSpan expected = new TimeSpan(); // TODO: Initialize to an appropriate value
+        //    TimeSpan actual;
+        //    actual = target.GotoDecoDepth(algorithm, currentDepth, finalDepth, runTime, ref diveTable, out stopDepth);
+        //    Assert.AreEqual(diveTableExpected, diveTable);
+        //    Assert.AreEqual(stopDepthExpected, stopDepth);
+        //    Assert.AreEqual(expected, actual);
+        //    Assert.Inconclusive("Verify the correctness of this test method.");
+        //}
 
         /// <summary>
         ///A test for StayAtDepth

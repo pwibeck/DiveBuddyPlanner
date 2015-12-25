@@ -68,7 +68,7 @@ namespace DiveLibraryTests
             ZH_L16 target = new ZH_L16();
             target.ActiveGas = gas;
             Gas newGas = new Gas(0.3, 0.7, 0.0);
-            target.ActiveGas = gas;
+            target.ActiveGas = newGas;
             Assert.AreEqual(newGas, target.ActiveGas);
         }
 
