@@ -39,7 +39,7 @@ namespace DiveLibrary
                     ascdescTime = GoingUp(algorithm, ref divetable, runTime, depth, waypoint);
                 }
 
-                int timeSpentAscDesc = MinutesRoundedUp(ascdescTime);
+                int timeSpentAscDesc = TimeHelper.MinutesRoundedUp(ascdescTime);
                 runTime += timeSpentAscDesc;
 
                 // Gas swith
@@ -82,25 +82,24 @@ namespace DiveLibrary
             double cns = CentralNervousSystem.ConstantDepth(algorithm.ActiveGas, depth, time);
             double otu = OxygenToxicityUnit.ConstantDepth(algorithm.ActiveGas, depth, time);
             var seg = new DiveSegment(depth, TimeSpan.FromMinutes(time), DiveState.Diving, runTime,
-                                      runTime + MinutesRoundedUp(TimeSpan.FromMinutes(time)), algorithm.ActiveGas, cns,
+                                      runTime + TimeHelper.MinutesRoundedUp(TimeSpan.FromMinutes(time)), algorithm.ActiveGas, cns,
                                       otu);
             Logger.Trace("Calc => Segment:" + seg);
             divetable.Add(seg);
         }
 
-        private TimeSpan GoingUp(ZH_L16 algorithm, ref Collection<DiveSegment> divetable, int runTime, double depth,
-                                 WayPoint waypoint)
+        private TimeSpan GoingUp(ZH_L16 algorithm, ref Collection<DiveSegment> divetable, int runTime, double depth, WayPoint waypoint)
         {
             var ascdescTime = new TimeSpan();
 
-            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(depth));
+            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(firstDecoDepth, depth, pref));
 
             //// No deco needed
             if (minDepthAscent <= waypoint.Depth)
             {
                 algorithm.AscendDecsend(depth, waypoint.Depth, pref.AscRate);
                 ascdescTime = CalcAscDescTime(depth - waypoint.Depth, pref.AscRate);
-                int timespent = MinutesRoundedUp(ascdescTime);
+                int timespent = TimeHelper.MinutesRoundedUp(ascdescTime);
                 double cns = CentralNervousSystem.AscendDescend(algorithm.ActiveGas, depth, waypoint.Depth, Math.Abs(pref.AscRate));
                 double otu = OxygenToxicityUnit.AscendDescend(algorithm.ActiveGas, depth, waypoint.Depth, Math.Abs(pref.AscRate));
 
@@ -120,7 +119,7 @@ namespace DiveLibrary
             else
             {
                 ascdescTime = GotoDecoDepth(algorithm, depth, waypoint.Depth, runTime, ref divetable, out depth);
-                runTime += MinutesRoundedUp(ascdescTime);
+                runTime += TimeHelper.MinutesRoundedUp(ascdescTime);
                 if (Math.Abs(depth - waypoint.Depth) > 0.001)
                 {
                     TimeSpan decoTime = DoDeco(algorithm, depth, waypoint.Depth, runTime, ref divetable);
@@ -136,7 +135,7 @@ namespace DiveLibrary
         {
             algorithm.AscendDecsend(currentDepth, waypoint.Depth, pref.DescRate);
             TimeSpan ascdescTime = CalcAscDescTime(waypoint.Depth - currentDepth, pref.DescRate);
-            int timespent = MinutesRoundedUp(ascdescTime);
+            int timespent = TimeHelper.MinutesRoundedUp(ascdescTime);
             double cns = CentralNervousSystem.AscendDescend(algorithm.ActiveGas, currentDepth, waypoint.Depth, Math.Abs(pref.DescRate));
             double otu = OxygenToxicityUnit.AscendDescend(algorithm.ActiveGas, currentDepth, waypoint.Depth, Math.Abs(pref.DescRate));
 
@@ -159,7 +158,7 @@ namespace DiveLibrary
             return ascdescTime;
         }
 
-        private static double CalcHalfWayDepth(double depth1, double depth2)
+        public static double CalcHalfWayDepth(double depth1, double depth2)
         {
             if (depth2 > depth1)
             {
@@ -169,26 +168,10 @@ namespace DiveLibrary
             return (depth1 - (Math.Abs(depth2 - depth1)/2.0));
         }
 
-        private static int MinutesRoundedUp(TimeSpan time)
-        {
-            int timespent;
-            double fraction = time.TotalMinutes - Math.Floor(time.TotalMinutes);
-            if (fraction > 0.0)
-            {
-                timespent = (int) (time.TotalMinutes - fraction) + 1;
-            }
-            else
-            {
-                timespent = (int) time.TotalMinutes;
-            }
-
-            return timespent;
-        }
-
         private TimeSpan GotoDecoDepth(ZH_L16 algorithm, double currentDepth, double finalDepth, int runTime,
                                        ref Collection<DiveSegment> diveTable, out double stopDepth)
         {
-            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(currentDepth));
+            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(firstDecoDepth, currentDepth, pref));
             double decoDepth = GetDecoDepth(minDepthAscent, pref);
 
             if (decoDepth >= currentDepth)
@@ -202,7 +185,7 @@ namespace DiveLibrary
             stopDepth = ContinueAscend(algorithm, finalDepth, decoDepth);
 
             TimeSpan timeSpentInGoingUp = CalcAscDescTime(currentDepth - stopDepth, pref.AscRate);
-            int timespent = MinutesRoundedUp(timeSpentInGoingUp);
+            int timespent = TimeHelper.MinutesRoundedUp(timeSpentInGoingUp);
 
             // Round to complete minute
             double diffTime = Math.Abs(timeSpentInGoingUp.TotalMinutes - timespent);
@@ -218,7 +201,7 @@ namespace DiveLibrary
                     ContinueAscend(algorithm, finalDepth, stopDepth);
 
                     timeSpentInGoingUp = CalcAscDescTime(currentDepth - newStopDepth, pref.AscRate);
-                    timespent = MinutesRoundedUp(timeSpentInGoingUp);
+                    timespent = TimeHelper.MinutesRoundedUp(timeSpentInGoingUp);
 
                     // Round to complete minute
                     diffTime = Math.Abs(timeSpentInGoingUp.TotalMinutes - timespent);
@@ -247,7 +230,7 @@ namespace DiveLibrary
         {
             double stopDepth;
 
-            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(decoDepth));
+            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(firstDecoDepth, decoDepth, pref));
 
             //// deco was not needed
             if (minDepthAscent <= finalDepth)
@@ -278,7 +261,7 @@ namespace DiveLibrary
                             "GotoDecoDepth => During ascent to depth:{0} we have changed celling to next deco depth:{1}",
                             oldDecoDepth, decoDepth);
                         algorithm.AscendDecsend(oldDecoDepth, decoDepth, pref.AscRate);
-                        minDepthAscent = algorithm.MinDepthAscent(CalcGradient(decoDepth));
+                        minDepthAscent = algorithm.MinDepthAscent(CalcGradient(firstDecoDepth, decoDepth, pref));
                     }
                     else
                     {
@@ -302,7 +285,7 @@ namespace DiveLibrary
 
             Logger.Trace("DoDeco => currentDepth:{0}, FinalDepth:{1}", currentDepth, finalDepth);
 
-            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(currentDepth));
+            double minDepthAscent = algorithm.MinDepthAscent(CalcGradient(firstDecoDepth, currentDepth, pref));
             double decoDepth = GetDecoDepth(minDepthAscent, pref);
 
             if (Math.Abs(currentDepth - decoDepth) > 0.001)
@@ -322,7 +305,7 @@ namespace DiveLibrary
             {
                 decoDepth = GetDecoDepth(minDepthAscent, pref);
 
-                int timespent = GetDecoStopTime(algorithm, decoDepth, pref, CalcGradient(decoDepth));
+                int timespent = GetDecoStopTime(algorithm, decoDepth, pref, CalcGradient(firstDecoDepth, decoDepth, pref));
                 TimeSpan decoTime = TimeSpan.FromMinutes(timespent);
                 timeSpentDeco += TimeSpan.FromMinutes(timespent);
                 double cns = CentralNervousSystem.ConstantDepth(algorithm.ActiveGas, decoDepth, timespent);
@@ -346,7 +329,7 @@ namespace DiveLibrary
             return timeSpentDeco;
         }
 
-        private double CalcGradient(double currentDepth)
+        public static double CalcGradient(double firstDecoDepth, double currentDepth, Preference pref)
         {
             if (Math.Abs(firstDecoDepth - 0) > 0.001)
             {
@@ -398,7 +381,7 @@ namespace DiveLibrary
             return pref.LowGradient;
         }
 
-        private static TimeSpan CalcAscDescTime(double depthDiff, double rate)
+        public static TimeSpan CalcAscDescTime(double depthDiff, double rate)
         {
             double result = depthDiff/Math.Abs(rate);
             return TimeSpan.FromMinutes(result);
@@ -440,7 +423,7 @@ namespace DiveLibrary
             return timer;
         }
 
-        private static double GetDecoDepth(double depth, Preference pref)
+        public static double GetDecoDepth(double depth, Preference pref)
         {
             var fac = (int) Math.Ceiling(depth/pref.DepthBetweenDecoStops);
 
