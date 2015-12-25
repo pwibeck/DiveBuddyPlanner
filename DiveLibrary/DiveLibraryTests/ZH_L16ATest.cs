@@ -69,8 +69,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_NoStopTimeAirTest_0()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
+            Gas gas = new Gas(0.21, 0.79, 0.0);
             ZH_L16A target = new ZH_L16A();
             target.ActiveGas = gas;
             int depth = 0;
@@ -86,8 +85,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_NoStopTimeAirTest_35()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
+            Gas gas = new Gas(0.21, 0.79, 0.0);
             ZH_L16A target = new ZH_L16A();
             target.ActiveGas = gas;
             int depth = 35;
@@ -103,8 +101,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_NoStopTimeAirTest_30()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
+            Gas gas = new Gas(0.21, 0.79, 0.0);
             ZH_L16A target = new ZH_L16A();
             target.ActiveGas = gas;
             int depth = 30;
@@ -120,8 +117,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_NoStopTimeTest_10()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
+            Gas gas = new Gas(0.21, 0.79, 0.0);
             ZH_L16A target = new ZH_L16A();
             target.ActiveGas = gas;
             int depth = 10;
@@ -137,9 +133,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_AddRunTimeInMinutesTest()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16A_Accessor target = new ZH_L16A_Accessor();
             target.ActiveGas = gas;
             Assert.AreEqual(7.4047, Math.Round(((ZH_Compartment)target.Compartments[0]).PartialPresureNitrogen, 4));
@@ -158,9 +152,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_AscendDecsendTest()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16A_Accessor target = new ZH_L16A_Accessor();
             target.ActiveGas = gas;
             Assert.AreEqual(7.4047, Math.Round(((ZH_Compartment)target.Compartments[0]).PartialPresureNitrogen, 4));
@@ -180,9 +172,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_AscendDecsendTest_FastDescent()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16A_Accessor target = new ZH_L16A_Accessor();
             target.ActiveGas = gas;
 
@@ -200,9 +190,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_AscendDecsendTest_SlowDescent()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16A_Accessor target1 = new ZH_L16A_Accessor();
             target1.ActiveGas = gas;
             ZH_L16A_Accessor target2 = new ZH_L16A_Accessor();
@@ -226,9 +214,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_MinDepthAscentTest_GF_1_0()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16A_Accessor target = new ZH_L16A_Accessor();
             target.ActiveGas = gas;
 
@@ -249,9 +235,7 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16A_MinDepthAscentTest_GF_0_1()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16A_Accessor target = new ZH_L16A_Accessor();
             target.ActiveGas = gas;
 

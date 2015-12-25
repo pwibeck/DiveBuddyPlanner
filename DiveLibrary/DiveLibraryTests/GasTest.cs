@@ -70,9 +70,8 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void Gas_EqualsTest_False()
         {
-            Gas target = new Gas();
-            target.OxygenPart = 1;
-            object obj = new Gas();
+            Gas target = new Gas(0.2, 0.2, 0.6);
+            object obj = new Gas(0.2, 0.6, 0.2);
             bool expected = false;
             bool actual;
             actual = target.Equals(obj);
@@ -85,14 +84,8 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void Gas_EqualsTest_True()
         {
-            Gas target = new Gas();
-            target.OxygenPart = 1;
-            target.NitrogenPart = 2;
-            target.HeliumPart = 3;
-            Gas obj = new Gas();
-            obj.OxygenPart = 1;
-            obj.NitrogenPart = 2;
-            obj.HeliumPart = 3;
+            Gas target = new Gas(0.2, 0.2, 0.6);
+            Gas obj = new Gas(0.2, 0.2, 0.6);
             bool expected = true;
             bool actual;
             actual = target.Equals(obj);
@@ -105,11 +98,8 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void Gas_ToString()
         {
-            Gas target = new Gas();
-            target.OxygenPart = 1;
-            target.NitrogenPart = 2;
-            target.HeliumPart = 3;
-            string expected = "O2:100% N2:200% H:300%";
+            Gas target = new Gas(0.1, 0.2, 0.7);
+            string expected = "O2:10% N2:20% H:70%";
             string actual;
             actual = target.ToString();
             Assert.AreEqual(expected, actual);

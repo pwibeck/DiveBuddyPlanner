@@ -4,10 +4,6 @@ namespace DiveLibrary
 {
     public class Gas
     {
-        public Gas()
-        {
-        }
-
         public Gas(double oxygenPart, double heliumPart)
         {
             Init(oxygenPart, 1.0 - (oxygenPart + heliumPart), heliumPart);
@@ -21,26 +17,26 @@ namespace DiveLibrary
         public double OxygenPart
         {
             get { return OxygenProcent/100.0; }
-            set { OxygenProcent = (int) (value*100.0); }
+            private set { OxygenProcent = (int) (value*100.0); }
         }
 
         public double HeliumPart
         {
             get { return HeliumProcent/100.0; }
-            set { HeliumProcent = (int) (value*100.0); }
+            private set { HeliumProcent = (int) (value*100.0); }
         }
 
         public double NitrogenPart
         {
             get { return NitrogenProcent/100.0; }
-            set { NitrogenProcent = (int) (value*100.0); }
+            private set { NitrogenProcent = (int) (value*100.0); }
         }
 
-        public int OxygenProcent { get; set; }
+        public int OxygenProcent { get; private set; }
 
-        public int HeliumProcent { get; set; }
+        public int HeliumProcent { get; private set; }
 
-        public int NitrogenProcent { get; set; }
+        public int NitrogenProcent { get; private set; }
 
         private void Init(double oxygenPart, double nitrogenPart, double heliumPart)
         {

@@ -64,12 +64,10 @@ namespace DiveLibraryTests
         [TestMethod()]
         public void ZH_L16_ChangeGas()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
+            Gas gas = new Gas(0.21, 0.79, 0.0);
             ZH_L16 target = new ZH_L16();
             target.ActiveGas = gas;
-            Gas newGas = new Gas();
-            newGas.NitrogenPart = 0.79;
+            Gas newGas = new Gas(0.3, 0.7, 0.0);
             target.ActiveGas = gas;
             Assert.AreEqual(newGas, target.ActiveGas);
         }
@@ -81,9 +79,7 @@ namespace DiveLibraryTests
         [ExpectedException(typeof(ArgumentException))]
         public void ZH_L16_AscendDecsendTest_ZeroRate_ThrowException()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16 target = new ZH_L16();
             target.ActiveGas = gas;
 
@@ -100,9 +96,7 @@ namespace DiveLibraryTests
         [ExpectedException(typeof(ArgumentException))]
         public void ZH_L16_AscendDecsendTest_NegativeStartDepth_ThrowExcpetion()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16 target = new ZH_L16();
             target.ActiveGas = gas;
 
@@ -119,9 +113,7 @@ namespace DiveLibraryTests
         [ExpectedException(typeof(ArgumentException))]
         public void ZH_L16_AscendDecsendTest_NegativeFinishDepth_ThrowException()
         {
-            Gas gas = new Gas();
-            gas.NitrogenPart = 0.79;
-            gas.HeliumPart = 0.1;
+            Gas gas = new Gas(0.11, 0.79, 0.1);
             ZH_L16 target = new ZH_L16();
             target.ActiveGas = gas;
 
