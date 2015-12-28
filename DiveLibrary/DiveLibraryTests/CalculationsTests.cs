@@ -49,11 +49,11 @@
         }
 
         [Theory,
-            InlineData(21, 0, 0.2),
-            InlineData(21, 10, 0.4),
-            InlineData(79, 0, 0.8),
-            InlineData(79, 40, 4),
-            InlineData(32, 12, 0.7)]
+            InlineData(21, 0, 0.21),
+            InlineData(21, 10, 0.42),
+            InlineData(79, 0, 0.79),
+            InlineData(79, 40, 3.95),
+            InlineData(32, 12, 0.704)]
         public void PartialPressureofGas(int gasProcent, int depth, double expectedResult)
         {
             var result = Calculations.PartialPressureofGas(gasProcent, depth);

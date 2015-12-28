@@ -20,7 +20,7 @@ namespace DiveLibrary
             return Math.Round((((nitrogenLevel*(depth + 10))/0.79) - 10), 1);
         }
 
-        public static double PartialPressureofGas(int gasProcent, int depth)
+        public static double PartialPressureofGas(int gasProcent, double depth)
         {
             if (gasProcent < 0 || gasProcent > 100)
             {
@@ -34,7 +34,7 @@ namespace DiveLibrary
 
             double oxygen = ((double) gasProcent/100);
             double result = ((double) (depth + 10)/10)*oxygen;
-            return Math.Round(result, 1);
+            return Math.Round(result, 3);
         }
 
         public static double MaximumOperatingDepth(int oxygenProcent, double ppo2Level)

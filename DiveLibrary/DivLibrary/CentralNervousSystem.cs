@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace DiveLibrary
 {
+    using System.Linq;
+
     public static class CentralNervousSystem
     {
         private static readonly Collection<PO2Data> PO2Datas = new Collection<PO2Data>
@@ -28,27 +30,21 @@ namespace DiveLibrary
                 throw new ArgumentException("Time need to be posetive");
             }
 
-            double po2 = gas.OxygenPart*(depth + 10.0)/10.0;
+            var ppo2level = Calculations.PartialPressureofGas(gas.OxygenProcent, depth);
 
-            if (po2 > 1.6)
+            if (ppo2level > 1.6)
             {
-                throw new ArgumentException("PO2 value above 1.6 can't calculate CNS");
+                throw new ArgumentException("PPO2 value above 1.6 can't calculate CNS");
             }
 
-            if (po2 <= 0.5)
+            if (ppo2level <= 0.5)
             {
                 return 0;
             }
 
-            double tlim = 0;
-            foreach (PO2Data data in PO2Datas)
-            {
-                if (data.PO2Low < po2 && data.PO2Hight >= po2)
-                {
-                    tlim = data.Slope*po2 + data.Intercept;
-                    break;
-                }
-            }
+            var tlim = PO2Datas.Where(x => x.PO2Low < ppo2level && x.PO2Hight >= ppo2level)
+                               .Select(x => x.Slope*ppo2level + x.Intercept)
+                               .FirstOrDefault();
 
             return Math.Round((time/tlim)*100, 2);
         }
@@ -81,9 +77,9 @@ namespace DiveLibrary
                 rate = rate*-1.0;
             }
 
-            double time = (finalDepth - startDepth)/rate;
-            double po2End = gas.OxygenPart*(finalDepth + 10.0)/10.0;
-            double po2Start = gas.OxygenPart*(startDepth + 10.0)/10.0;
+            var time = (finalDepth - startDepth)/rate;
+            var po2End = Calculations.PartialPressureofGas(gas.OxygenProcent, finalDepth);
+            var po2Start = Calculations.PartialPressureofGas(gas.OxygenProcent, startDepth);
 
             // CNS is only effective if pressure bigger then 0.5
             if (po2End < 0.5 & po2Start < 0.5)
@@ -200,13 +196,13 @@ namespace DiveLibrary
                 Intercept = intercept;
             }
 
-            public double PO2Low { get; set; }
+            public double PO2Low { get; }
 
-            public double PO2Hight { get; set; }
+            public double PO2Hight { get; }
 
-            public int Slope { get; set; }
+            public int Slope { get; }
 
-            public int Intercept { get; set; }
+            public int Intercept { get; }
         }
 
         #endregion
