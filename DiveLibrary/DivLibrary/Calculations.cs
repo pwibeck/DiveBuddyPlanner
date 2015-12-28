@@ -4,10 +4,20 @@ namespace DiveLibrary
 {
     public class Calculations
     {
-        public static int EquivalentAirDepth(int oxygenProcent, int depth)
+        public static double EquivalentAirDepth(int oxygenProcent, int depth)
         {
+            if (oxygenProcent < 0 || oxygenProcent > 100)
+            {
+                throw new ArgumentException("oxygenProcent need to be between 0-100");
+            }
+
+            if (depth < 0)
+            {
+                throw new ArgumentException("depth need to be posetive");
+            }
+
             double nitrogenLevel = 1 - ((double) oxygenProcent/100);
-            return (int) (((nitrogenLevel*(depth + 10))/0.79) - 10);
+            return Math.Round((((nitrogenLevel*(depth + 10))/0.79) - 10), 1);
         }
 
         public static double PartialPressure(int oxygenProcent, int depth)

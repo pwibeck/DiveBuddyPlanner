@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationsTests.cs" />
     <Compile Include="CentralNervousSystemTest.cs" />
     <Compile Include="DiveProfileTest.cs" />
     <Compile Include="GasTest.cs" />

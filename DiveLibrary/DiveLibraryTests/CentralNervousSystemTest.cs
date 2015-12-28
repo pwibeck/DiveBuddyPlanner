@@ -142,7 +142,6 @@ namespace DiveLibraryTests
             double startDepth = -5;
             double finalDepth = 5;
             double rate = 1;
-            double expected = 0;
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate));
         }
@@ -157,7 +156,6 @@ namespace DiveLibraryTests
             double startDepth = 5;
             double finalDepth = -5;
             double rate = 1;
-            double expected = 0;
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate));
         }
@@ -172,7 +170,6 @@ namespace DiveLibraryTests
             double startDepth = 0;
             double finalDepth = 5;
             double rate = -1;
-            double expected = 0;
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate));
         }
@@ -187,7 +184,6 @@ namespace DiveLibraryTests
             double startDepth = 0;
             double finalDepth = 5;
             double rate = 0;
-            double expected = 0;
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate));
         }
@@ -232,7 +228,6 @@ namespace DiveLibraryTests
             Gas gas = new Gas(0.32, 0.68, 0);
             double depth = 50;
             double time = 50;
-            double expected = 0;
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.ConstantDepth(gas, depth, time));
         }
@@ -246,7 +241,6 @@ namespace DiveLibraryTests
             Gas gas = new Gas(0.32, 0.68, 0);
             double depth = -50;
             double time = 20;
-            double expected = 0;
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.ConstantDepth(gas, depth, time));
         }
@@ -260,7 +254,6 @@ namespace DiveLibraryTests
             Gas gas = new Gas(0.32, 0.68, 0);
             double depth = 20;
             double time = -50;
-            double expected = 0;
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.ConstantDepth(gas, depth, time));
         }
