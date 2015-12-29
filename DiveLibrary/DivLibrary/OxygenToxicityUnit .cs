@@ -16,7 +16,7 @@ namespace DiveLibrary
                 throw new ArgumentException("Time need to be posetive");
             }
 
-            double po2 = gas.OxygenPart*(depth + 10.0)/10.0;
+            double po2 = Calculations.PartialPressureofGas(gas.OxygenProcent, depth);
 
             if (po2 <= 0.5)
             {
