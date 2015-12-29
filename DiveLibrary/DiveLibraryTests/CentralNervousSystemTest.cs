@@ -7,65 +7,18 @@ namespace DiveLibraryTests
 
     public class CentralNervousSystemTest
     {
-        [Fact]
-        public void CNS_AscendDescend_Ascend()
+        [Theory,
+            InlineData(0,22,12,0.31),
+            InlineData(22, 0, 12, 0.31),
+            InlineData(22, 22, 12, 0),
+            InlineData(0, 18, 1, 2.29),
+            InlineData(20, 20.5, 1, 0.16),
+            InlineData(0, 5, 1, 0)]
+        public void CNS_AscendDescend(double startDepth, double finalDepth, double rate, double expectedResult)
         {
             Gas gas = new Gas(0.32, 0.68, 0);
-            double startDepth = 0;
-            double finalDepth = 22;
-            double rate = 12;
-            double expected = 0.29;
-            double actual;
-            actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
-            Assert.Equal(expected, actual);
-        }
-
-        /// <summary>
-        ///A test for AscendDescend
-        ///</summary>
-        [Fact]
-        public void CNS_AscendDescend_Desend()
-        {
-            Gas gas = new Gas(0.32, 0.68, 0);
-            double startDepth = 22;
-            double finalDepth = 0;
-            double rate = 12;
-            double expected = 0.38;
-            double actual;
-            actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
-            Assert.Equal(expected, actual);
-        }
-
-        /// <summary>
-        ///A test for AscendDescend
-        ///</summary>
-        [Fact]
-        public void CNS_AscendDescend_NoCnsDepth()
-        {
-            Gas gas = new Gas(0.32, 0.68, 0);
-            double startDepth = 0;
-            double finalDepth = 5;
-            double rate = 1;
-            double expected = 0;
-            double actual;
-            actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
-            Assert.Equal(expected, actual);
-        }
-
-        /// <summary>
-        ///A test for AscendDescend
-        ///</summary>
-        [Fact]
-        public void CNS_AscendDescend_StartDepthEqualFinalDepth()
-        {
-            Gas gas = new Gas(0.32, 0.68, 0);
-            double startDepth = 30;
-            double finalDepth = 30;
-            double rate = 1;
-            double expected = 0;
-            double actual;
-            actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
-            Assert.Equal(expected, actual);
+            var actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
+            Assert.Equal(expectedResult, actual);
         }
 
         /// <summary>
@@ -78,7 +31,7 @@ namespace DiveLibraryTests
             double startDepth = 20;
             double finalDepth = 30;
             double rate = 10;
-            double expected = 0.42;
+            double expected = 0.43;
             double actual;
             actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
             Assert.Equal(expected, actual);
@@ -94,7 +47,7 @@ namespace DiveLibraryTests
             double startDepth = 30;
             double finalDepth = 20;
             double rate = 10;
-            double expected = 0.58;
+            double expected = 0.43;
             double actual;
             actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
             Assert.Equal(expected, actual);
@@ -110,7 +63,7 @@ namespace DiveLibraryTests
             double startDepth = 19;
             double finalDepth = 23;
             double rate = 10;
-            double expected = 0.13;
+            double expected = 0.15;
             double actual;
             actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
             Assert.Equal(expected, actual);
@@ -126,7 +79,7 @@ namespace DiveLibraryTests
             double startDepth = 23;
             double finalDepth = 19;
             double rate = 10;
-            double expected = 0.18;
+            double expected = 0.15;
             double actual;
             actual = Math.Round(CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate), 2);
             Assert.Equal(expected, actual);
@@ -187,41 +140,18 @@ namespace DiveLibraryTests
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.AscendDescend(gas, startDepth, finalDepth, rate));
         }
-
-        /// <summary>
-        ///A test for ConstantDepth
-        ///</summary>
-        [Fact]
-        public void CNS_ConstantDepth()
+        
+        [Theory, 
+            InlineData(0.32, 36, 22, 17.13),
+            InlineData(0.32, 5, 50, 0),
+            InlineData(0.36, 34.45, 1, 2.22)]
+        public void CNS_ConstantDepth(double oxygenPart, double depth, double time, double expectedResult)
         {
-            Gas gas = new Gas(0.32, 0.68, 0);
-            double depth = 36;
-            double time = 22;
-            double expected = 17.13;
-            double actual;
-            actual = Math.Round(CentralNervousSystem.ConstantDepth(gas, depth, time), 2);
-            Assert.Equal(expected, actual);
+            var gas = new Gas(oxygenPart, 1- oxygenPart, 0);
+            var actual = Math.Round(CentralNervousSystem.ConstantDepth(gas, depth, time), 2);
+            Assert.Equal(expectedResult, actual);
         }
-
-        /// <summary>
-        ///A test for ConstantDepth
-        ///</summary>
-        [Fact]
-        public void CNS_ConstantDepth_NoCnsDepth()
-        {
-            Gas gas = new Gas(0.32, 0.68, 0);
-            double depth = 5;
-            double time = 50;
-            double expected = 0;
-            double actual;
-
-            actual = Math.Round(CentralNervousSystem.ConstantDepth(gas, depth, time), 1);
-            Assert.Equal(expected, actual);
-        }
-
-        /// <summary>
-        ///A test for ConstantDepth
-        ///</summary>
+        
         [Fact]
         public void CNS_ConstantDepth_ToHighPo_ThrowException()
         {
@@ -231,10 +161,7 @@ namespace DiveLibraryTests
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.ConstantDepth(gas, depth, time));
         }
-
-        /// <summary>
-        ///A test for ConstantDepth
-        ///</summary>
+        
         [Fact]
         public void CNS_ConstantDepth_NegativeDepth_ThrowException()
         {
@@ -244,10 +171,7 @@ namespace DiveLibraryTests
 
             Assert.Throws<ArgumentException>(() => CentralNervousSystem.ConstantDepth(gas, depth, time));
         }
-
-        /// <summary>
-        ///A test for ConstantDepth
-        ///</summary>
+        
         [Fact]
         public void CNS_ConstantDepth_NegativeTime_ThrowException()
         {

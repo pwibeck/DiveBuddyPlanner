@@ -49,7 +49,7 @@ namespace DiveLibrary
             return Math.Round((time/tlim)*100, 2);
         }
 
-        public static double AscendDescend(Gas gas, double startDepth, double finalDepth, double rate)
+        public static double AscendDescend(Gas gas, double startDepth, double finalDepth, double metersPerMinutes)
         {
             if (startDepth < 0)
             {
@@ -61,7 +61,7 @@ namespace DiveLibrary
                 throw new ArgumentException("Final depth need to be posetive");
             }
 
-            if (rate <= 0)
+            if (metersPerMinutes <= 0)
             {
                 throw new ArgumentException("Rate need to be posetive number above 0");
             }
@@ -71,119 +71,23 @@ namespace DiveLibrary
                 return 0;
             }
 
-            // Going up. Hence invert rate
-            if (finalDepth < startDepth)
-            {
-                rate = rate*-1.0;
-            }
-
-            var time = (finalDepth - startDepth)/rate;
-            var po2End = Calculations.PartialPressureofGas(gas.OxygenProcent, finalDepth);
-            var po2Start = Calculations.PartialPressureofGas(gas.OxygenProcent, startDepth);
-
-            // CNS is only effective if pressure bigger then 0.5
-            if (po2End < 0.5 & po2Start < 0.5)
-            {
-                return 0;
-            }
-            
-            if (po2Start < 0.5)
-            {
-                time = time*((po2End - 0.5)/(po2End - po2Start));
-                po2Start = 0.5;
-            }
-            else if (po2End < 0.5)
-            {
-                time = time*((po2Start - 0.5)/(po2Start - po2End));
-                po2End = 0.5;
-            }
-
-            double maxPo2;
-            double minPo2;
-            if (po2End > po2Start)
-            {
-                maxPo2 = po2End;
-                minPo2 = po2Start;
-            }
-            else
-            {
-                maxPo2 = po2Start;
-                minPo2 = po2End;
-            }
+            var depthDiff = Math.Abs(finalDepth - startDepth);
+            var totalTime = depthDiff / metersPerMinutes;
+            var timeAtDepth = totalTime / (depthDiff * 2);
+            var lowestDepth = finalDepth > startDepth ? finalDepth : startDepth;
+            var highestDepth = finalDepth > startDepth ? startDepth : finalDepth;
 
             double cns = 0;
-            foreach (PO2Data data in PO2Datas)
+
+            // calc for every half meter and sum
+            for (var depth = lowestDepth; depth > highestDepth; depth -= 0.5)
             {
-                double segmentTime = 0;
-                double po2 = 0;
-                double podiff = 0;
-                if (data.PO2Hight >= minPo2 & data.PO2Low < maxPo2)
-                {
-                    if (data.PO2Low >= minPo2 & data.PO2Hight <= maxPo2)
-                    {
-                        podiff = data.PO2Hight - data.PO2Low;
-                        if (rate < 0)
-                        {
-                            po2 = data.PO2Hight;
-                        }
-                        else
-                        {
-                            po2 = data.PO2Low;
-                        }
-                    }
-                    else if (data.PO2Low >= minPo2 & data.PO2Hight > maxPo2)
-                    {
-                        podiff = maxPo2 - data.PO2Low;
-                        if (rate < 0)
-                        {
-                            po2 = maxPo2;
-                        }
-                        else
-                        {
-                            po2 = data.PO2Low;
-                        }
-                    }
-                    else if (data.PO2Low < minPo2 & data.PO2Hight <= maxPo2)
-                    {
-                        podiff = data.PO2Hight - minPo2;
-                        if (rate < 0)
-                        {
-                            po2 = data.PO2Hight;
-                        }
-                        else
-                        {
-                            po2 = minPo2;
-                        }
-                    }
-                    else
-                    {
-                        podiff = maxPo2 - minPo2;
-                        if (rate < 0)
-                        {
-                            po2 = maxPo2;
-                        }
-                        else
-                        {
-                            po2 = minPo2;
-                        }
-                    }
-
-                    segmentTime = time*(podiff/(maxPo2 - minPo2));
-                }
-
-                if (segmentTime > 0)
-                {
-                    double tlim = data.Slope*po2 + data.Intercept;
-                    // double addedCns = (segmentTime / tlim);
-                    double mk = data.Slope*(podiff/segmentTime);
-                    double addedCns = (1.0/mk)*(Math.Log(Math.Abs(tlim + mk*segmentTime)) - Math.Log(Math.Abs(tlim)));
-                    cns += addedCns;
-                }
+                cns += ConstantDepth(gas, depth, timeAtDepth);
             }
 
-            return Math.Round(cns*100, 2);
+            return cns;
         }
-
+        
         #region Nested type: PO2Data
 
         private class PO2Data
