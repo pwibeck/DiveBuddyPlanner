@@ -192,7 +192,7 @@ namespace DiveLibrary
             double diffDepth = CalcHalfWayDepth(currentDepth, stopDepth);
             if (Math.Abs(diffTime - 0) > 0.001)
             {
-                var algorithm2 = (ZH_L16) algorithm.Clone();
+                var algorithm2 = new ZH_L16(algorithm);
                 algorithm2.AddRunTimeInMinutes(diffTime, diffDepth);
                     // Try adding additional runtime to verify if we should go up even more.
                 double newStopDepth = ContinueAscend(algorithm2, finalDepth, stopDepth);

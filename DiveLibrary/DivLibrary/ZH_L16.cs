@@ -5,7 +5,7 @@ using NLog;
 
 namespace DiveLibrary
 {
-    public class ZH_L16 : ICloneable
+    public class ZH_L16
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         protected Collection<ZH_Compartment> Compartments;
@@ -16,25 +16,18 @@ namespace DiveLibrary
             Compartments = new Collection<ZH_Compartment>();
         }
 
-        public Gas ActiveGas { get; set; }
-
-        #region ICloneable Members
-
-        public object Clone()
+        public ZH_L16(ZH_L16 other)
         {
-            var obj = new ZH_L16();
-            foreach (ZH_Compartment item in Compartments)
+            foreach (ZH_Compartment item in other.Compartments)
             {
-                obj.Compartments.Add((ZH_Compartment) item.Clone());
+                this.Compartments.Add(new ZH_Compartment(item));
             }
 
-            obj.ActiveGas = ActiveGas;
-
-            return obj;
+            this.ActiveGas = other.ActiveGas;
         }
 
-        #endregion
-
+        public Gas ActiveGas { get; set; }
+        
         public void AddRunTimeInMinutes(double time, double depth)
         {
             if (ActiveGas == null)

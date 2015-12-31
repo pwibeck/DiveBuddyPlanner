@@ -2,7 +2,7 @@
 
 namespace DiveLibrary
 {
-    public class HalidanCompartment : ICloneable
+    public class HalidanCompartment
     {
         private static readonly double Log2 = Math.Log(2);
         private double halfTimeHelium;
@@ -62,26 +62,7 @@ namespace DiveLibrary
         {
             get { return m0Value; }
         }
-
-        #region ICloneable Members
-
-        public object Clone()
-        {
-            var obj = new HalidanCompartment
-                          {
-                              halfTimeHelium = halfTimeHelium,
-                              halfTimeNitrogen = halfTimeNitrogen,
-                              KHe = KHe,
-                              KN2 = KN2,
-                              m0Value = m0Value,
-                              partialPresureHelium = partialPresureHelium,
-                              partialPresureNitrogen = partialPresureNitrogen
-                          };
-            return obj;
-        }
-
-        #endregion
-
+        
         /// <summary>
         /// Sets compartment time constants
         /// </summary>

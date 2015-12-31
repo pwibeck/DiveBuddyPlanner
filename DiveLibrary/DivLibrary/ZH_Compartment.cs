@@ -2,28 +2,29 @@
 
 namespace DiveLibrary
 {
-    public class ZH_Compartment : HalidanCompartment, ICloneable
+    public class ZH_Compartment : HalidanCompartment
     {
         private double aHe; // A and b co-efficients       
         private double aN2; // A and b co-efficients       
         private double bHe; // A and b co-efficients       
         private double bN2; // A and b co-efficients       
 
-        #region ICloneable Members
-
-        public new object Clone()
+        public ZH_Compartment()
         {
-            var obj = new ZH_Compartment {aHe = aHe, aN2 = aN2, bHe = bHe, bN2 = bN2};
-
-            obj.SetCompartmentTimeConstants(HalfTimeHelium, HalfTimeNitrogen);
-            obj.m0Value = m0Value;
-            obj.PartialPresureHelium = PartialPresureHelium;
-            obj.PartialPresureNitrogen = PartialPresureNitrogen;
-
-            return obj;
         }
 
-        #endregion
+        public ZH_Compartment(ZH_Compartment other)
+        {
+            this.aHe = other.aHe;
+            this.aN2 = other.aN2;
+            this.bHe = other.bHe;
+            this.bN2 = other.bN2;
+
+            this.SetCompartmentTimeConstants(other.HalfTimeHelium, other.HalfTimeNitrogen);
+            this.m0Value = other.m0Value;
+            this.PartialPresureHelium = other.PartialPresureHelium;
+            this.PartialPresureNitrogen = other.PartialPresureNitrogen;
+        }
 
         /// <summary>
         /// Sets compartment time constants
