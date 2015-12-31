@@ -47,7 +47,7 @@ namespace DiveBuddy_Planner
             this.DecoGas.Children.Clear();
             foreach (Gas gas in data.DecoGas)
             {
-                int decoDepth = DiveLibrary.Calculations.MaximumOperatingDepth(gas.OxygenProcent, 1.6);
+                var decoDepth = DiveLibrary.Calculations.MaximumOperatingDepth(gas.OxygenProcent, 1.6);
                 TextBlock txt = new TextBlock();
                 txt.Text = gas.ToString() + "MOD " + decoDepth;
                 this.DecoGas.Children.Add(txt);

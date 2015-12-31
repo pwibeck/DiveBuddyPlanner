@@ -85,7 +85,7 @@ namespace DiveBuddy_Planner
 
         private void UpdateMod()
         {
-            int decoDepth = DiveLibrary.Calculations.MaximumOperatingDepth(this.oxygen, 1.6);
+            var decoDepth = DiveLibrary.Calculations.MaximumOperatingDepth(this.oxygen, 1.6);
             this.mod.Text = "MOD " + decoDepth + "m";
         }
     }
